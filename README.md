@@ -1,1 +1,110 @@
-# Shuyi_Game
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>小何的找文物小游戏</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin: 50px; background-color: #fdf6e3; }
+        pre { text-align: left; background: #eee; padding: 10px; border-radius: 5px; display: inline-block; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>小何的找文物小游戏</h1>
+    <pre id="story">
+     _.--._ _.--._
+,-=.-":;:;:;\\':;:;:;"-._
+\\\\\\:;:;:;:;:\\:;:;:;:;:;:\\
+ \\\\\\:;:;:;:;:\\:;:;:;:;:;:\\
+  \\\\\\:;:;:;:;:\\:;:;:;:;:;:\\
+   \\\\\\:;:;:;:;:\\:;::;:;:;:\\
+    \\\\\\;:;::;:;:\\:;:;:;::;:\\
+     \\\\\\;;:;:_:--:\\:_:--:_;:\\
+      \\\\\\_.-" : "-._\\-——-___-\\
+       \\`_..--""--.;.--""--..___-=>
+
+欢迎来到小何的找文物小游戏。
+何sy目前在一座古城里。你的任务是帮助他做出正确的选择，找到城里的文物：一本古籍。
+现在他面前有一个十字路口，你想要他走左边还是右边？
+    </pre>
+    <div id="choices">
+        <button onclick="choose('左')">左</button>
+        <button onclick="choose('右')">右</button>
+    </div>
+
+    <script>
+        let stage = 1;
+
+        function choose(option) {
+            const story = document.getElementById('story');
+            const choices = document.getElementById('choices');
+            if (stage === 1) {
+                if (option === '右') {
+                    story.textContent += "\n\n小何越走越偏，最终迷了路，没找到文物所在地。游戏结束";
+                    choices.innerHTML = "";
+                } else if (option === '左') {
+                    story.textContent += "\n\n往左走是对的！蛛丝马迹都显示这个方向就是通往文物的康庄大道。\n根据队友提供的线索，小何终于找到了文物所在地——一座寺庙，但是庙宇前的大门挡住了去路。\n现在该怎么做？是用准备好的烈性炸药强行突破，还是另辟蹊径？";
+                    story.textContent += `
+      ______
+   ,-' ;  ! \`-.
+  / :  !  :  . \\
+ |_ ;   __:  ;  |
+ )| .  :)(.  !  |
+ |"    (##)  _  |
+ |  :  ;\`'  (_) (
+ |  :  :  .     |
+ )_ !  ,  ;  ;  |
+ || .  .  :  :  |
+ |" .  |  :  .  |
+ |----_;----.___|
+`;
+                    updateChoices(['炸药', '绕路']);
+                    stage = 2;
+                }
+            } else if (stage === 2) {
+                if (option === '炸药') {
+                    story.textContent += "\n\n炸药的威力太大，古寺庙坍塌了...小何幸运地毫发无伤。可惜文物受损严重。游戏结束";
+                    choices.innerHTML = "";
+                } else if (option === '绕路') {
+                    story.textContent += "\n\n小何绕到寺庙后院，发现一扇后门，门上的锁饱经风雨，已经生锈得很厉害了。用力一推，门就打开了。\n进入到庙里，小何发现三个铜人，它们的脸上的五官各自缺了嘴巴，耳朵和眼睛。\n这一定就是传说中的“勿言”、“勿听”和“勿视”三铜人了。\n根据可靠情报，要找的古籍就在铜人的体内。三个铜人的手上都各有一个醒目的按钮，按下就能启动古老的机关，打开铜人的身体。\n然而，只有一个铜人体内的是古籍，其它两个的体内很可能是危险的机关陷阱。\n帮助小何做出选择吧。";
+                    story.textContent += `
+                  __
+               _/ =\\
+             ,'  .__)
+            / | |/
+            | | |\\
+            ( | |.)
+            / /_/<
+          _/  /\\  \\
+       ,-'__,'  \\ |
+       ) /      | |_
+       ""       \\___)
+`;
+                    updateChoices(['勿言', '勿听', '勿视']);
+                    stage = 3;
+                }
+            } else if (stage === 3) {
+                if (option === '勿言') {
+                    story.textContent += "\n\n满怀着紧张，小何按动按钮，屏息注视着缓缓打开的铜人。\n预想中的可怕陷阱并没有出现，只见一卷年代久远的古籍出现在铜人体内。\n跨越千年，古籍重现人间！\n恭喜你帮助小何找到了文物，这是好结局！游戏结束！";
+                } else if (option === '勿听') {
+                    story.textContent += "\n\n小何小心翼翼地按动按钮。\n起初的几秒，什么也没发生。\n然而不过片刻，仿佛一万口钟磬轰鸣的爆响从古寺的地面下方传来。这声音猛烈地震撼了整个庙宇，千年古寺的房屋架构支撑不住，轰然倒塌。\n小何很幸运没有因为寺庙的坍塌而受伤，可文物就没那么幸运了。。。游戏结束";
+                } else if (option === '勿视') {
+                    story.textContent += "\n\n小何思考良久，按动按钮。\n铜人缓缓打开，却不见古籍。小何正疑惑，突然一阵耀眼的光芒出现在铜人体内，刺得他睁不开眼睛。\n片刻后，一股热浪自身前袭来，小何虽然看不清发生了什么，却还是凭借本能一个闪身向后退去。\n原来是铜人体内的机关陷阱被触发了！只见无数道恐怖的火舌向四周无情的喷涌，三个铜人全部在肆虐的火势中化作铜水，连带着古籍一起消失殆尽。\n小何幸运地毫发无伤，但是古籍永远失去了重见天日的机会。游戏结束";
+                }
+                choices.innerHTML = "";
+            }
+        }
+
+        function updateChoices(options) {
+            const choices = document.getElementById('choices');
+            choices.innerHTML = "";
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => choose(opt);
+                choices.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
